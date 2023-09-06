@@ -5,6 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import styles from "./styles";
 import AddItem from "../Components/AddItem";
 import ListItem from "../Components/ListItem";
+import CustomModal from "../Components/CustomModal";
 
 const Home = () => {
   const initialState = [
@@ -27,21 +28,11 @@ const Home = () => {
   };
   return (
     <View style={styles.container}>
-      <Modal visible={isModalVisible}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContainerBox}>
-            <Text style={styles.modalText}>¿Estas seguro que deseas borrar este item?</Text>
-            <View style={styles.modalContent}>
-              <Pressable onPress={() => confirmacion()}>
-                <Text style={styles.modalText}>Si</Text>
-              </Pressable>
-              <Pressable onPress={() => setIsModalVisible(false)}>
-                <Text style={styles.modalText}>No</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <CustomModal
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+        confirmacion={confirmacion}
+      />
       <Text style={styles.title}> Lista de Compras</Text>
 
       {/* Componente Input con Boton */}
@@ -56,9 +47,7 @@ const Home = () => {
         <FlatList
           data={list}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <ListItem item={item}/>
-          )}
+          renderItem={({ item }) => <ListItem item={item} />}
         />
       </View>
       <Pressable onPress={() => setIsModalVisible(true)}>
